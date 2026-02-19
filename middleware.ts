@@ -24,23 +24,30 @@ export function middleware(request: NextRequest) {
 
     // 1. Se l'utente arriva dal dominio di Morgana
     if (hostname.includes(morganaDomain)) {
-        // Riscrive invisibilmente la richiesta verso la cartella /morgana
-        return NextResponse.rewrite(new URL(`/morgana${url.pathname}${url.search}`, request.url));
+        if (!url.pathname.startsWith('/morgana')) {
+            return NextResponse.rewrite(new URL(`/morgana${url.pathname}${url.search}`, request.url));
+        }
     }
 
     // 2. Se l'utente arriva dal dominio di Orum
     if (hostname.includes(orumDomain)) {
-        // Riscrive invisibilmente la richiesta verso la cartella /orum
-        return NextResponse.rewrite(new URL(`/orum${url.pathname}${url.search}`, request.url));
+        if (!url.pathname.startsWith('/orum')) {
+            return NextResponse.rewrite(new URL(`/orum${url.pathname}${url.search}`, request.url));
+        }
     }
 
     // 3. Per lo sviluppo in locale sul tuo computer (localhost:3000)
     if (hostname.includes('localhost')) {
-        // Quando sviluppi, puoi forzare uno dei due temi per testarlo. 
-        // Cambia '/morgana' con '/orum' a seconda di quale vuoi visualizzare sul tuo pc.
-        return NextResponse.rewrite(new URL(`/orum${url.pathname}${url.search}`, request.url));
+        if (!url.pathname.startsWith('/orum') && !url.pathname.startsWith('/morgana')) {
+            return NextResponse.rewrite(new URL(`/orum${url.pathname}${url.search}`, request.url));
+        }
     }
 
-    // Fallback: se non c'è match, procedi normalmente
+    // 4. Fallback per il dominio Vercel diretto (es. url.pathname === '/')
+    if (url.pathname === '/') {
+        return NextResponse.redirect(new URL('/orum', request.url));
+    }
+
+    // Fallback generico: se non c'è match, procedi normalmente
     return NextResponse.next();
 }
