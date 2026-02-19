@@ -20,34 +20,13 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    // --- LOGICA DI INDIRIZZAMENTO ---
-
-    // 1. Se l'utente arriva dal dominio di Morgana
-    if (hostname.includes(morganaDomain)) {
-        if (!url.pathname.startsWith('/morgana')) {
-            return NextResponse.rewrite(new URL(`/morgana${url.pathname}${url.search}`, request.url));
-        }
-    }
-
-    // 2. Se l'utente arriva dal dominio di Orum
-    if (hostname.includes(orumDomain)) {
-        if (!url.pathname.startsWith('/orum')) {
-            return NextResponse.rewrite(new URL(`/orum${url.pathname}${url.search}`, request.url));
-        }
-    }
-
-    // 3. Per lo sviluppo in locale sul tuo computer (localhost:3000)
-    if (hostname.includes('localhost')) {
-        if (!url.pathname.startsWith('/orum') && !url.pathname.startsWith('/morgana')) {
-            return NextResponse.rewrite(new URL(`/orum${url.pathname}${url.search}`, request.url));
-        }
-    }
-
-    // 4. Fallback per il dominio Vercel diretto (es. url.pathname === '/')
+    // Se l'utente visita la root principale senza specificare il brand (es: sito.com/)
+    // Reindirizziamo di default a Orum (puoi cambiare questo comportamento a piacere)
     if (url.pathname === '/') {
         return NextResponse.redirect(new URL('/orum', request.url));
     }
 
-    // Fallback generico: se non c'è match, procedi normalmente
+    // Per tutte le altre route (es: /morgana/events, /orum/login, ecc...) procedi normalmente
+    // Sarà poi Vercel a poter essere configurato per collegare i domini reali a specifici path!
     return NextResponse.next();
 }
