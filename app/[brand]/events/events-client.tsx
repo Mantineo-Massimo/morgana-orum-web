@@ -273,7 +273,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem, brand: string }>
                 exit={{ opacity: 0, scale: 0.95 }}
             >
                 <Link
-                    href={`/events/${item.id}`}
+                    href={`/${brand}/events/${item.id}`}
                     className={cn(
                         "group bg-white rounded-2xl border border-zinc-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full block",
                         theme.border

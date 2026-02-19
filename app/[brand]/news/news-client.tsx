@@ -145,7 +145,7 @@ function NewsCard({ item, brand }: { item: any, brand: string }) {
             className="group bg-white rounded-2xl overflow-hidden shadow-lg shadow-zinc-200/50 hover:shadow-2xl transition-all hover:-translate-y-1 border border-zinc-100 flex flex-col h-full"
         >
             {/* Image - clickable */}
-            <Link href={`/news/${item.id}`} className="relative h-48 bg-zinc-100 overflow-hidden block cursor-pointer">
+            <Link href={`/${brand}/news/${item.id}`} className="relative h-48 bg-zinc-100 overflow-hidden block cursor-pointer">
                 {item.image ? (
                     <Image
                         src={item.image}
@@ -196,7 +196,7 @@ function NewsCard({ item, brand }: { item: any, brand: string }) {
                             </span>
                         ))}
                     </div>
-                    <Link href={`/news/${item.id}`} className={cn("flex items-center text-sm font-bold transition-transform group-hover:translate-x-1", isMorgana ? "text-[#c12830]" : "text-[#18182e]")}>
+                    <Link href={`/${brand}/news/${item.id}`} className={cn("flex items-center text-sm font-bold transition-transform group-hover:translate-x-1", isMorgana ? "text-[#c12830]" : "text-[#18182e]")}>
                         Leggi <ChevronRight className="size-4" />
                     </Link>
                 </div>

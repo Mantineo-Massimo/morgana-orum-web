@@ -7,7 +7,8 @@ export const dynamic = "force-dynamic"
 
 // 2. Aggiungiamo 'async' alla funzione per poter aspettare i dati dal database
 export default async function BrandHomePage({ params }: { params: { brand: string } }) {
-    const isMorgana = params.brand === 'morgana';
+    const brand = params.brand;
+    const isMorgana = brand === 'morgana';
 
     // 3. CHIAMATA AL DATABASE: Peschiamo le vere notizie
     const ultimeNotizie = await prisma.news.findMany({
@@ -73,7 +74,7 @@ export default async function BrandHomePage({ params }: { params: { brand: strin
 
                     <div className="grid md:grid-cols-3 gap-6">
                         {prossimiEventi.map((evento) => (
-                            <Link href={`/events/${evento.id}`} key={evento.id} className="relative group overflow-hidden bg-muted aspect-[4/3] flex items-end p-6 border-b-4 border-primary shadow-sm hover:shadow-lg transition-all block">
+                            <Link href={`/${brand}/events/${evento.id}`} key={evento.id} className="relative group overflow-hidden bg-muted aspect-[4/3] flex items-end p-6 border-b-4 border-primary shadow-sm hover:shadow-lg transition-all block">
                                 {evento.image && (
                                     <img src={evento.image} alt={evento.title} className="absolute inset-0 w-full h-full object-cover z-0" />
                                 )}
@@ -129,7 +130,7 @@ export default async function BrandHomePage({ params }: { params: { brand: strin
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {ultimeNotizie.map((news) => (
-                            <Link href={`/news/${news.id}`} key={news.id} className="group flex flex-col bg-background border border-border shadow-sm hover:shadow-md transition-shadow">
+                            <Link href={`/${brand}/news/${news.id}`} key={news.id} className="group flex flex-col bg-background border border-border shadow-sm hover:shadow-md transition-shadow">
                                 {/* Image Placeholder */}
                                 <div className="aspect-video bg-muted relative overflow-hidden">
                                     {news.image && (
