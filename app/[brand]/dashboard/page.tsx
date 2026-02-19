@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { QrCode, Calendar, Clock, CheckCircle, Loader2, Award, Ticket } from "lucide-react"
+import { QrCode, Calendar, Clock, CheckCircle, Loader2, Award, Ticket, Bell, MessageSquare } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getUserDashboardData } from "@/app/actions/users"
 import Image from "next/image"
@@ -75,30 +75,31 @@ export default function DashboardPage({ params }: { params: { brand: string } })
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
                     <div className="flex items-center gap-3 mb-2">
-                        <Award className="size-5 text-orange-500" />
-                        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">CFU Accumulati</span>
+                        <MessageSquare className="size-5 text-blue-500" />
+                        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Messaggi</span>
                     </div>
-                    <p className="text-3xl font-black text-zinc-900">{userData.stats.totalCfu}</p>
+                    <p className="text-3xl font-black text-zinc-900">0</p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
                     <div className="flex items-center gap-3 mb-2">
-                        <Ticket className="size-5 text-blue-500" />
+                        <Ticket className="size-5 text-zinc-900" />
                         <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Eventi Seguiti</span>
                     </div>
                     <p className="text-3xl font-black text-zinc-900">{userData.stats.attendedCount}</p>
                 </div>
                 <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
                     <div className="flex items-center gap-3 mb-2">
-                        <Calendar className="size-5 text-purple-500" />
+                        <Calendar className="size-5 text-zinc-900" />
                         <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Prenotazioni</span>
                     </div>
                     <p className="text-3xl font-black text-zinc-900">{userData.stats.eventCount}</p>
                 </div>
-                <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm flex items-center justify-center">
-                    <div className="text-center">
-                        <QrCode className="size-8 text-zinc-200" />
-                        <p className="text-[10px] font-bold text-zinc-400 uppercase mt-1">ID: {userData.matricola}</p>
+                <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
+                    <div className="flex items-center gap-3 mb-2">
+                        <Bell className="size-5 text-zinc-400" />
+                        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Notifiche</span>
                     </div>
+                    <p className="text-3xl font-black text-zinc-900">1</p>
                 </div>
             </div>
 
@@ -126,13 +127,18 @@ export default function DashboardPage({ params }: { params: { brand: string } })
                         <div className="relative z-10 h-full p-6 md:p-8 flex flex-col justify-between text-white">
                             {/* Top Section: Logos */}
                             <div className="flex justify-between items-start">
-                                <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-md">
-                                    <QrCode className="size-16 md:size-20 text-white" />
-                                </div>
                                 <div className="bg-white/90 p-2 rounded-xl shadow-lg backdrop-blur-sm flex items-center gap-3">
                                     <div className="relative size-8 md:size-10">
                                         <Image src={isMorgana ? "/assets/morgana.png" : "/assets/orum.png"} alt={brand} fill className="object-contain" sizes="40px" />
                                     </div>
+                                </div>
+                            </div>
+
+                            {/* Center Section: Membership Label */}
+                            <div className="flex-1 flex items-center justify-center">
+                                <div className="text-center py-4 px-6 border border-white/20 rounded-2xl bg-white/5 backdrop-blur-sm">
+                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60 mb-1">Status Socio</p>
+                                    <p className="text-lg font-bold text-white tracking-tight">Membro dal {userData.memberSince}</p>
                                 </div>
                             </div>
 
@@ -149,7 +155,7 @@ export default function DashboardPage({ params }: { params: { brand: string } })
                                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                                             </span>
-                                            <span className="font-medium text-xs uppercase tracking-wider">Membro attivo dal 2026</span>
+                                            <span className="font-medium text-xs uppercase tracking-wider">Membro dal {userData.memberSince}</span>
                                         </div>
                                         <p className="font-serif italic text-[10px] opacity-80">&quot;Sempre dalla parte dello studente&quot;</p>
                                     </div>

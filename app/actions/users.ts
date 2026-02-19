@@ -45,7 +45,8 @@ export async function getUserDashboardData(email?: string) {
                 matricola: user.matricola,
                 association: user.association,
                 qrToken: user.qrToken,
-                role: user.role
+                role: user.role,
+                memberSince: user.createdAt.getFullYear()
             },
             events
         }
