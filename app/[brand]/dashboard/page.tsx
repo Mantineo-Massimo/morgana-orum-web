@@ -45,7 +45,7 @@ export default function DashboardPage({ params }: { params: { brand: string } })
                 </div>
                 {userData.role === "ADMIN" && (
                     <Link
-                        href="/admin"
+                        href={`/${brand}/admin`}
                         className="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors border border-zinc-200 bg-zinc-900 text-white hover:bg-zinc-800 flex items-center gap-2"
                     >
                         <ShieldCheck className="size-4" /> Pannello Admin

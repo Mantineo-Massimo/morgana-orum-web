@@ -91,7 +91,7 @@ export default function AdminNewsClient({
                     <p className="text-zinc-500">Crea, modifica ed elimina notizie e articoli.</p>
                 </div>
                 <Link
-                    href={`/admin/news/new`}
+                    href={`/${brand}/admin/news/new`}
                     className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 self-start md:self-auto"
                 >
                     <Plus className="size-4" /> Nuova Notizia
@@ -286,7 +286,7 @@ export default function AdminNewsClient({
                                             <td className="px-6 py-4 text-right">
                                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <Link
-                                                        href={`/admin/news/${item.id}/edit`}
+                                                        href={`/${brand}/admin/news/${item.id}/edit`}
                                                         className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-colors"
                                                         title="Modifica"
                                                     >

@@ -27,7 +27,7 @@ export async function loginAction(email: string) {
 
 export async function logoutAction(brand: string) {
     cookies().delete("session_email")
-    redirect(`/`)
+    redirect(`/${brand}`)
 }
 
 export async function registerUser(formData: FormData) {

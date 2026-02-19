@@ -33,7 +33,7 @@ export default async function AdminRepresentativesPage({
                     <p className="text-zinc-500">Gestisci l&apos;elenco dei rappresentanti eletti negli organi.</p>
                 </div>
                 <Link
-                    href={`/admin/representatives/new`}
+                    href={`/${brand}/admin/representatives/new`}
                     className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 self-start md:self-auto"
                 >
                     <Plus className="size-4" /> Aggiungi Nuovo
@@ -93,7 +93,7 @@ export default async function AdminRepresentativesPage({
                                 <td className="px-6 py-4 text-right">
                                     <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Link
-                                            href={`/admin/representatives/${rep.id}/edit`}
+                                            href={`/${brand}/admin/representatives/${rep.id}/edit`}
                                             className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-colors"
                                             title="Modifica"
                                         >

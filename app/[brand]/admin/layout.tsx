@@ -17,31 +17,31 @@ export default async function AdminLayout({
 
     // 1. Auth & Role Check
     if (!data || data.user.role !== "ADMIN") {
-        redirect(`/login`)
+        redirect(`/${brand}/login`)
     }
 
     const navItems = [
         {
             label: "Dashboard",
-            href: `/admin`,
+            href: `/${brand}/admin`,
             icon: LayoutDashboard,
             exact: true
         },
         {
             label: "Rappresentanti",
-            href: `/admin/representatives`,
+            href: `/${brand}/admin/representatives`,
             icon: Users,
             exact: false
         },
         {
             label: "Notizie",
-            href: `/admin/news`,
+            href: `/${brand}/admin/news`,
             icon: Newspaper,
             exact: false
         },
         {
             label: "Eventi",
-            href: `/admin/events`,
+            href: `/${brand}/admin/events`,
             icon: Calendar,
             exact: false
         },
@@ -85,7 +85,7 @@ export default async function AdminLayout({
 
                 <div className="p-4 border-t border-zinc-800">
                     <Link
-                        href="/dashboard"
+                        href={`/${brand}/dashboard`}
                         className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all group text-xs font-medium"
                     >
                         ← Area Personale

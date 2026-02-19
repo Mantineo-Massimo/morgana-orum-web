@@ -17,7 +17,7 @@ export default async function AdminEventsPage({ params }: { params: { brand: str
                     <p className="text-zinc-500 text-sm mt-1">Gestisci gli eventi dell&apos;associazione.</p>
                 </div>
                 <Link
-                    href="/admin/events/new"
+                    href={`/${params.brand}/admin/events/new`}
                     className="flex items-center gap-2 bg-zinc-900 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-zinc-800 transition-colors"
                 >
                     <Plus className="size-4" /> Nuovo Evento
@@ -75,7 +75,7 @@ export default async function AdminEventsPage({ params }: { params: { brand: str
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-2 justify-end">
                                             <Link
-                                                href={`/admin/events/${event.id}/edit`}
+                                                href={`/${params.brand}/admin/events/${event.id}/edit`}
                                                 className="p-2 rounded-lg hover:bg-zinc-100 text-zinc-500 hover:text-zinc-900 transition-colors"
                                             >
                                                 <Pencil className="size-4" />

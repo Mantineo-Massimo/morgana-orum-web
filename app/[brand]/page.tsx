@@ -67,7 +67,7 @@ export default async function BrandHomePage({ params }: { params: { brand: strin
                         <h2 className="text-3xl font-serif font-bold text-black uppercase tracking-tight pl-4 border-l-4 border-primary">
                             Prossimi Eventi
                         </h2>
-                        <Link href={`/events`} className="text-xs font-bold uppercase tracking-widest text-primary hover:underline" >
+                        <Link href={`/${brand}/events`} className="text-xs font-bold uppercase tracking-widest text-primary hover:underline" >
                             Calendario Completo
                         </Link>
                     </div>
@@ -123,7 +123,7 @@ export default async function BrandHomePage({ params }: { params: { brand: strin
                                 Non perderti le ultime iniziative:
                             </p>
                         </div>
-                        <Link href={`/news`} className="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors shrink-0 ml-4 border p-2 rounded-lg">
+                        <Link href={`/${brand}/news`} className="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors shrink-0 ml-4 border p-2 rounded-lg">
                             Vedi tutte
                         </Link>
                     </div>

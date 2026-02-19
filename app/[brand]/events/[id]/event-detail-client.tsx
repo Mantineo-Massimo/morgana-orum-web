@@ -111,7 +111,7 @@ export default function EventDetailClient({
                 )}
                 <div className="relative z-10 text-white pt-32 pb-20">
                     <div className="container mx-auto px-6">
-                        <Link href="/events" className="inline-flex items-center text-sm font-bold text-white/70 hover:text-white mb-6 uppercase tracking-widest transition-colors">
+                        <Link href={`/${brand}/events`} className="inline-flex items-center text-sm font-bold text-white/70 hover:text-white mb-6 uppercase tracking-widest transition-colors">
                             <ChevronLeft className="size-4 mr-1" /> Torna agli Eventi
                         </Link>
                         <span className="block text-sm font-bold uppercase tracking-widest text-white/60 mb-2">

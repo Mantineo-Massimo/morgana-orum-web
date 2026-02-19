@@ -29,7 +29,7 @@ export default async function NewsDetailPage({ params }: { params: { brand: stri
 
                 {/* Back Button */}
                 <Link
-                    href={`/news`}
+                    href={`/${params.brand}/news`}
                     className="text-zinc-500 hover:text-zinc-900 flex items-center gap-2 text-sm font-medium mb-8"
                 >
                     <ArrowLeft className="size-4" /> Torna alle notizie
@@ -98,7 +98,7 @@ export default async function NewsDetailPage({ params }: { params: { brand: stri
                     {/* Back button bottom */}
                     <div className="pt-8 border-t border-zinc-200">
                         <Link
-                            href={`/news`}
+                            href={`/${params.brand}/news`}
                             className={cn(
                                 "inline-flex items-center gap-2 font-bold",
                                 isMorgana ? "text-[#c12830]" : "text-[#18182e]"
