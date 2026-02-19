@@ -21,8 +21,11 @@ export function middleware(request: NextRequest) {
     }
 
     // Se l'utente visita la root principale senza specificare il brand (es: sito.com/)
-    // Reindirizziamo di default a Orum (puoi cambiare questo comportamento a piacere)
+    // Reindirizziamo in base al nome del dominio/sottodominio
     if (url.pathname === '/') {
+        if (hostname.includes('morgana')) {
+            return NextResponse.redirect(new URL('/morgana', request.url));
+        }
         return NextResponse.redirect(new URL('/orum', request.url));
     }
 
