@@ -4,6 +4,8 @@ import { notFound } from "next/navigation"
 
 const prisma = new PrismaClient()
 
+export const dynamic = "force-dynamic"
+
 export default async function EditRepresentativePage({ params }: { params: { brand: string, id: string } }) {
     const rep = await prisma.representative.findUnique({
         where: { id: params.id }
