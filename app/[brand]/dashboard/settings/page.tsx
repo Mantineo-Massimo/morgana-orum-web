@@ -1,5 +1,7 @@
 import { Construction } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 export default function SettingsPage() {
     return (
         <div className="min-h-screen bg-zinc-50 grid place-items-center p-6">

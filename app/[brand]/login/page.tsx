@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation"
 import { loginAction } from "@/app/actions/auth"
 import { Loader2, LogIn, ArrowRight } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 export default function LoginPage({ params }: { params: { brand: string } }) {
     const { brand } = params
     const router = useRouter()

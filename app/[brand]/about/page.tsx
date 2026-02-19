@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Users, Calendar, Award, BookOpen, Mic2, HeartHandshake, Briefcase, GraduationCap, Gavel } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+export const dynamic = "force-dynamic"
+
 export default function AboutPage({ params }: { params: { brand: string } }) {
     const { brand } = params
     const [activeTab, setActiveTab] = useState<"morgana" | "orum">(brand as "morgana" | "orum")

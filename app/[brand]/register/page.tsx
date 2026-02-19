@@ -8,6 +8,8 @@ import { registerUser } from "@/app/actions/auth"
 import { ArrowRight, Loader2 } from "lucide-react"
 import { departmentsData } from "../../../lib/departments"
 
+export const dynamic = "force-dynamic"
+
 export default function RegisterPage({ params }: { params: { brand: string } }) {
     const { brand } = params
     const router = useRouter()

@@ -10,6 +10,8 @@ import Link from "next/link"
 
 import { ShieldCheck } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 export default function DashboardPage({ params }: { params: { brand: string } }) {
     const { brand } = params
     const isMorgana = brand === "morgana"

@@ -3,6 +3,8 @@ import { ArrowRight, Calendar } from "lucide-react"
 import { HeroCarousel } from "@/components/hero-carousel"
 import prisma from "@/lib/prisma" // 1. Importiamo il nostro database
 
+export const dynamic = "force-dynamic"
+
 // 2. Aggiungiamo 'async' alla funzione per poter aspettare i dati dal database
 export default async function BrandHomePage({ params }: { params: { brand: string } }) {
     const isMorgana = params.brand === 'morgana';

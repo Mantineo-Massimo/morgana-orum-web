@@ -2,6 +2,8 @@
 
 import { FileText, Download } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 const myDocuments = [
     { id: 1, title: "Guida alle Borse di Studio 2026", size: "1.2 MB", type: "PDF" },
     { id: 2, title: "Regolamento Tasse UniMe", size: "850 KB", type: "PDF" },

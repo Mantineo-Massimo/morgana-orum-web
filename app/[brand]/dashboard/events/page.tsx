@@ -5,6 +5,8 @@ import { Calendar, CheckCircle, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getUserDashboardData } from "@/app/actions/users"
 
+export const dynamic = "force-dynamic"
+
 export default function DashboardEventsPage({ params }: { params: { brand: string } }) {
     const { brand } = params
     const [loading, setLoading] = useState(true)

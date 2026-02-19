@@ -4,6 +4,8 @@ import { useState } from "react"
 import { Mail, MessageCircle, Phone, Send, ChevronDown, ChevronUp } from "lucide-react"
 import { cn } from "@/lib/utils"
 
+export const dynamic = "force-dynamic"
+
 const faqs = [
     {
         question: "Come posso rinnovare la mia iscrizione?",
