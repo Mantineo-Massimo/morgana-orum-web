@@ -1,0 +1,231 @@
+"use server"
+
+import prisma from "@/lib/prisma"
+import { revalidatePath } from "next/cache"
+
+// --- READ ---
+
+export async function getAllEvents(userEmail?: string | null) {
+    const query: any = {
+        orderBy: { date: 'asc' },
+    }
+
+    if (userEmail) {
+        query.include = {
+            registrations: {
+                where: {
+                    user: { email: userEmail }
+                }
+            }
+        }
+    }
+
+    const events = await prisma.event.findMany(query)
+
+    return events.map((event: any) => ({
+        ...event,
+        isRegistered: event.registrations ? (event.registrations as any[]).length > 0 : false,
+        registrations: undefined
+    }))
+}
+
+export async function getEventById(id: number, userEmail?: string | null) {
+    const query: any = {
+        where: { id },
+    }
+
+    if (userEmail) {
+        query.include = {
+            registrations: {
+                where: {
+                    user: { email: userEmail }
+                }
+            }
+        }
+    }
+
+    const event = await prisma.event.findUnique(query) as any
+
+    if (!event) return null
+
+    return {
+        ...event,
+        isRegistered: event.registrations ? (event.registrations as any[]).length > 0 : false,
+        registrations: undefined
+    }
+}
+
+export async function getEventCategories() {
+    const events = await prisma.event.findMany({ select: { category: true } })
+    const categorySet = new Set<string>()
+    events.forEach((e: { category: string }) => categorySet.add(e.category))
+    return Array.from(categorySet).sort()
+}
+
+// --- REGISTRATION ---
+
+export async function registerForEvent(userEmail: string, eventId: number) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email: userEmail }
+        })
+
+        if (!user) {
+            return { success: false, message: "Utente non trovato." }
+        }
+
+        // Check if booking is open
+        const event = await prisma.event.findUnique({ where: { id: eventId } })
+        if (!event) {
+            return { success: false, message: "Evento non trovato." }
+        }
+
+        if (!event.bookingOpen) {
+            return { success: false, message: "Le prenotazioni per questo evento non sono aperte." }
+        }
+
+        const now = new Date()
+        if (event.bookingStart && now < event.bookingStart) {
+            return { success: false, message: `Le prenotazioni aprono il ${event.bookingStart.toLocaleDateString('it-IT')}.` }
+        }
+        if (event.bookingEnd && now > event.bookingEnd) {
+            return { success: false, message: "Le prenotazioni per questo evento sono chiuse." }
+        }
+
+        const existing = await prisma.registration.findUnique({
+            where: {
+                userId_eventId: {
+                    userId: user.id,
+                    eventId: eventId
+                }
+            }
+        })
+
+        if (existing) {
+            return { success: false, message: "Sei già registrato a questo evento." }
+        }
+
+        await prisma.registration.create({
+            data: {
+                userId: user.id,
+                eventId: eventId,
+                status: "REGISTERED"
+            }
+        })
+
+        revalidatePath("/[brand]/dashboard")
+        return { success: true, message: "Registrazione effettuata con successo!" }
+
+    } catch (error) {
+        console.error("Registration error:", error)
+        return { success: false, message: "Errore durante la registrazione." }
+    }
+}
+
+// --- ADMIN CRUD ---
+
+export async function createEvent(data: {
+    title: string
+    description: string
+    details?: string
+    date: string
+    endDate?: string
+    location: string
+    cfuValue?: string
+    cfuType?: string
+    cfuDepartments?: string
+    image?: string
+    category: string
+    bookingOpen: boolean
+    bookingStart?: string
+    bookingEnd?: string
+    attachments?: string
+}) {
+    try {
+        await prisma.event.create({
+            data: {
+                title: data.title,
+                description: data.description,
+                details: data.details || null,
+                date: new Date(data.date),
+                endDate: data.endDate ? new Date(data.endDate) : null,
+                location: data.location,
+                cfuValue: data.cfuValue || null,
+                cfuType: data.cfuType || null,
+                cfuDepartments: data.cfuDepartments || null,
+                image: data.image || null,
+                category: data.category,
+                bookingOpen: data.bookingOpen,
+                bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
+                bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
+                attachments: data.attachments || null,
+            }
+        })
+        revalidatePath("/[brand]/events")
+        revalidatePath("/[brand]/admin/events")
+        return { success: true }
+    } catch (error) {
+        console.error("Create event error:", error)
+        return { success: false, error: "Errore nella creazione dell'evento." }
+    }
+}
+
+export async function updateEvent(id: number, data: {
+    title: string
+    description: string
+    details?: string
+    date: string
+    endDate?: string
+    location: string
+    cfuValue?: string
+    cfuType?: string
+    cfuDepartments?: string
+    image?: string
+    category: string
+    bookingOpen: boolean
+    bookingStart?: string
+    bookingEnd?: string
+    attachments?: string
+}) {
+    try {
+        await prisma.event.update({
+            where: { id },
+            data: {
+                title: data.title,
+                description: data.description,
+                details: data.details || null,
+                date: new Date(data.date),
+                endDate: data.endDate ? new Date(data.endDate) : null,
+                location: data.location,
+                cfuValue: data.cfuValue || null,
+                cfuType: data.cfuType || null,
+                cfuDepartments: data.cfuDepartments || null,
+                image: data.image || null,
+                category: data.category,
+                bookingOpen: data.bookingOpen,
+                bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
+                bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
+                attachments: data.attachments || null,
+            }
+        })
+        revalidatePath("/[brand]/events")
+        revalidatePath("/[brand]/admin/events")
+        return { success: true }
+    } catch (error) {
+        console.error("Update event error:", error)
+        return { success: false, error: "Errore nell'aggiornamento dell'evento." }
+    }
+}
+
+export async function deleteEvent(id: number) {
+    try {
+        await prisma.registration.deleteMany({ where: { eventId: id } })
+        await prisma.event.delete({ where: { id } })
+        revalidatePath("/[brand]/events")
+        revalidatePath("/[brand]/admin/events")
+        return { success: true }
+    } catch (error) {
+        console.error("Delete event error:", error)
+        return { success: false, error: "Errore nell'eliminazione dell'evento." }
+    }
+}
