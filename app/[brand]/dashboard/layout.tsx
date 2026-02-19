@@ -37,31 +37,31 @@ export default function DashboardLayout({
     const navItems = [
         {
             label: "Panoramica",
-            href: `/dashboard`,
+            href: `/${brand}/dashboard`,
             icon: LayoutDashboard,
             exact: true
         },
         {
             label: "I Miei Eventi",
-            href: `/dashboard/events`,
+            href: `/${brand}/dashboard/events`,
             icon: Calendar,
             exact: false
         },
         {
             label: "Documenti",
-            href: `/dashboard/documents`,
+            href: `/${brand}/dashboard/documents`,
             icon: FileText,
             exact: false
         },
         {
             label: "Assistenza",
-            href: `/dashboard/support`,
+            href: `/${brand}/dashboard/support`,
             icon: HelpCircle,
             exact: false
         },
         {
             label: "Impostazioni",
-            href: `/dashboard/settings`,
+            href: `/${brand}/dashboard/settings`,
             icon: Settings,
             exact: false
         }

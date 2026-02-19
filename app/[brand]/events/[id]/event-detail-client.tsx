@@ -203,7 +203,7 @@ export default function EventDetailClient({
                                         <p className="text-xs mt-1">Devi effettuare l&apos;accesso o registrarti per prenotare un posto a questo evento.</p>
                                     </div>
                                     <Link
-                                        href={`/login`}
+                                        href={`/${brand}/login`}
                                         className={cn(
                                             "w-full py-3 text-white font-bold rounded-xl shadow-lg transition-transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2",
                                             theme.bg

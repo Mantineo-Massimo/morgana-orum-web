@@ -26,7 +26,7 @@ export default function LoginPage({ params }: { params: { brand: string } }) {
 
         if (result.success) {
             // In a real app, we would set a session cookie here
-            router.push(`/dashboard`)
+            router.push(`/${params.brand}/dashboard`)
         } else {
             setError(result.error || "Login fallito.")
             setIsLoading(false)

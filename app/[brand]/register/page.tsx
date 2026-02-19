@@ -29,7 +29,7 @@ export default function RegisterPage({ params }: { params: { brand: string } }) 
         const result = await registerUser(formData)
 
         if (result.success) {
-            router.push(`/dashboard`)
+            router.push(`/${params.brand}/dashboard`)
         } else {
             setError(result.error || "Qualcosa è andato storto.")
             setIsLoading(false)
@@ -131,7 +131,7 @@ export default function RegisterPage({ params }: { params: { brand: string } }) 
                 </form>
 
                 <p className="text-center text-xs text-zinc-400 mt-6">
-                    Hai già un account? <Link href={`/dashboard`} className="underline hover:text-zinc-900">Accedi</Link>
+                    Hai già un account? <Link href={`/${params.brand}/login`} className="underline hover:text-zinc-900">Accedi</Link>
                 </p>
             </div>
         </div>
