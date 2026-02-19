@@ -132,7 +132,7 @@ export default function EventForm({ brand, initialData }: EventFormProps) {
                 : await createEvent(rawData)
 
             if (result.success) {
-                router.push(`/admin/events`)
+                router.push(`/${brand}/admin/events`)
                 router.refresh()
             } else {
                 setError(result.error || "Errore sconosciuto")
@@ -151,7 +151,7 @@ export default function EventForm({ brand, initialData }: EventFormProps) {
         <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="mb-8">
                 <Link
-                    href="/admin/events"
+                    href={`/${brand}/admin/events`}
                     className="text-zinc-500 hover:text-zinc-900 flex items-center gap-2 text-sm font-medium mb-4"
                 >
                     <ArrowLeft className="size-4" /> Torna alla lista

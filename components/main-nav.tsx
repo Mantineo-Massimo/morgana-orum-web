@@ -16,30 +16,29 @@ export function MainNav({
 }: React.HTMLAttributes<HTMLElement> & { brand: string, isScrolled?: boolean, isLoggedIn?: boolean }) {
     const pathname = usePathname()
 
-    // Rimuoviamo il prefisso /${brand} dai link per farli funzionare con i domini personalizzati
     const routes = [
         {
-            href: "/",
+            href: `/${brand}`,
             label: "Home",
             active: pathname === "/" || pathname === `/${brand}`,
         },
         {
-            href: "/about",
+            href: `/${brand}/about`,
             label: "Chi Siamo",
             active: pathname === "/about" || pathname === `/${brand}/about`,
         },
         {
-            href: "/news",
+            href: `/${brand}/news`,
             label: "Notizie",
             active: pathname === "/news" || pathname === `/${brand}/news`,
         },
         {
-            href: "/events",
+            href: `/${brand}/events`,
             label: "Eventi",
             active: pathname === "/events" || pathname === `/${brand}/events`,
         },
         {
-            href: "/representatives",
+            href: `/${brand}/representatives`,
             label: "Rappresentanti",
             active: pathname === "/representatives" || pathname === `/${brand}/representatives`,
         },
@@ -72,7 +71,7 @@ export function MainNav({
             {isLoggedIn ? (
                 <div className="flex items-center gap-3 ml-4">
                     <Link
-                        href="/dashboard"
+                        href={`/${brand}/dashboard`}
                         className={cn(
                             "flex items-center gap-2 px-4 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
                             brand === 'morgana'
@@ -93,7 +92,7 @@ export function MainNav({
                 </div>
             ) : (
                 <Link
-                    href="/login"
+                    href={`/${brand}/login`}
                     className={cn(
                         "ml-4 px-6 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
                         brand === 'morgana'

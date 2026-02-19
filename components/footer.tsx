@@ -22,11 +22,11 @@ export function Footer({ brand }: { brand: string }) {
                             {/* Logos Row */}
                             <div className="flex items-center gap-3">
                                 {/* Morgana */}
-                                <Link href="/" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
+                                <Link href="/morgana" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
                                     <Image src="/assets/morgana.png" alt="Morgana logo" fill className="object-contain" sizes="56px" />
                                 </Link>
                                 {/* Orum */}
-                                <Link href="/" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
+                                <Link href="/orum" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
                                     <Image src="/assets/orum.png" alt="Orum logo" fill className="object-contain" sizes="56px" />
                                 </Link>
                                 {/* Azione */}
@@ -53,12 +53,12 @@ export function Footer({ brand }: { brand: string }) {
                             Navigazione
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
-                            <li><Link href="/" className={cn("transition-colors", mutedColor)}>Home</Link></li>
-                            <li><Link href="/about" className={cn("transition-colors", mutedColor)}>Chi Siamo</Link></li>
-                            <li><Link href="/news" className={cn("transition-colors", mutedColor)}>Notizie</Link></li>
-                            <li><Link href="/events" className={cn("transition-colors", mutedColor)}>Eventi</Link></li>
-                            <li><Link href="/representatives" className={cn("transition-colors", mutedColor)}>Rappresentanti</Link></li>
-                            <li><Link href="/login" className={cn("transition-colors font-bold", mutedColor)}>Area Riservata</Link></li>
+                            <li><Link href={`/${brand}`} className={cn("transition-colors", mutedColor)}>Home</Link></li>
+                            <li><Link href={`/${brand}/about`} className={cn("transition-colors", mutedColor)}>Chi Siamo</Link></li>
+                            <li><Link href={`/${brand}/news`} className={cn("transition-colors", mutedColor)}>Notizie</Link></li>
+                            <li><Link href={`/${brand}/events`} className={cn("transition-colors", mutedColor)}>Eventi</Link></li>
+                            <li><Link href={`/${brand}/representatives`} className={cn("transition-colors", mutedColor)}>Rappresentanti</Link></li>
+                            <li><Link href={`/${brand}/login`} className={cn("transition-colors font-bold", mutedColor)}>Area Riservata</Link></li>
                         </ul>
                     </div>
 
