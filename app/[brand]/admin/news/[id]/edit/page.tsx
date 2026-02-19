@@ -1,9 +1,8 @@
 import NewsForm from "@/components/admin/news-form"
 import { getNewsCategories } from "@/app/actions/news"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { notFound } from "next/navigation"
 
-const prisma = new PrismaClient()
 
 export const dynamic = "force-dynamic"
 

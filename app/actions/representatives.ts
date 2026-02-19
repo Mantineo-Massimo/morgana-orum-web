@@ -3,9 +3,8 @@
 
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 
-const prisma = new PrismaClient()
 
 const representativeSchema = z.object({
     name: z.string().min(1, "Il nome è obbligatorio"),

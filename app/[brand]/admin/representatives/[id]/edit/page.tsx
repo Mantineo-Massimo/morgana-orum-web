@@ -1,8 +1,7 @@
 import RepresentativeForm from "@/components/admin/representative-form"
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { notFound } from "next/navigation"
 
-const prisma = new PrismaClient()
 
 export const dynamic = "force-dynamic"
 

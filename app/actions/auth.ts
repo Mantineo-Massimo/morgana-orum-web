@@ -1,10 +1,9 @@
 "use server"
 
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-const prisma = new PrismaClient()
 
 export async function loginAction(email: string) {
     // SIMPLIFIED AUTH for demo purposes
