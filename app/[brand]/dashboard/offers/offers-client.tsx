@@ -88,12 +88,22 @@ export default function OffersClient({ initialData, brand }: { initialData: Conv
                         >
                             <div className="p-6 flex-1">
                                 <div className="flex items-start justify-between mb-4">
-                                    <div className="relative size-24 rounded-full border-2 border-zinc-100 overflow-hidden bg-white flex items-center justify-center p-5 shadow-sm shrink-0 mx-auto md:mx-0">
-                                        {item.logo ? (
-                                            <Image src={item.logo} alt={item.name} fill className="object-contain p-4" quality={100} priority />
-                                        ) : (
-                                            <Globe className="size-10 text-zinc-200" />
-                                        )}
+                                    <div className="relative size-24 rounded-full border-2 border-zinc-50 overflow-hidden bg-white shadow-sm shrink-0 mx-auto md:mx-0 flex items-center justify-center">
+                                        <div className="relative w-[70%] h-[70%]">
+                                            {item.logo ? (
+                                                <Image
+                                                    src={item.logo}
+                                                    alt={item.name}
+                                                    fill
+                                                    className="object-contain"
+                                                    sizes="96px"
+                                                    quality={100}
+                                                    priority
+                                                />
+                                            ) : (
+                                                <Globe className="size-full text-zinc-100" />
+                                            )}
+                                        </div>
                                     </div>
                                     <div className="flex flex-col items-end gap-1.5">
                                         <span className="px-2.5 py-1 rounded-lg bg-zinc-100 text-zinc-600 text-[10px] font-bold uppercase tracking-wider">
