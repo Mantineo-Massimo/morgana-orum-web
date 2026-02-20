@@ -42,9 +42,10 @@ export function StickyHeader({ brand, isLoggedIn = false }: { brand: string, isL
                         brandColorClass,
                         isMorgana ? "rounded-br-[100px]" : "[clip-path:polygon(0_0,100%_0,85%_100%,0%_100%)]",
                         // Dynamic width logic
+                        // The background needs to be wide enough to cover the logo on the left
                         isScrolled
-                            ? (isMorgana ? "w-[75%] md:w-[32%]" : "w-[80%] md:w-[32%]")
-                            : (isMorgana ? "w-[85%] md:w-[40%]" : "w-[90%] md:w-[40%]")
+                            ? (isMorgana ? "w-[85%] md:w-[32%]" : "w-[85%] md:w-[32%]") // Più a destra quando si scende
+                            : (isMorgana ? "w-[55%] md:w-[40%]" : "w-[60%] md:w-[40%]") // Più a sinistra (meno larga) quando in alto
                     )}
                 />
             </div>
@@ -52,22 +53,12 @@ export function StickyHeader({ brand, isLoggedIn = false }: { brand: string, isL
             {/* CONTENT LAYER - Handles Alignment with Container */}
             <div
                 className={cn(
-                    "container relative z-20 flex items-center transition-all duration-500",
-                    isScrolled ? "h-20 md:h-24" : "h-32 md:h-40",
-                    "justify-start lg:justify-between gap-2 lg:gap-0"
+                    "container relative z-20 flex items-center transition-all duration-500 justify-between",
+                    isScrolled ? "h-20 md:h-24" : "h-32 md:h-40"
                 )}
             >
-                {/* Navigation Section - Menu hamburger a sinistra su mobile */}
-                <div className="flex items-center order-1 lg:order-2">
-                    <MainNav
-                        brand={brand}
-                        isScrolled={true} // Always white background style
-                        isLoggedIn={isLoggedIn}
-                    />
-                </div>
-
-                {/* Logo Section - Logo a destra del menu su mobile, a sinistra su desktop */}
-                <Link href={`/`} className="flex items-center gap-3 group order-2 lg:order-1">
+                {/* Logo Section - Left Aligned */}
+                <Link href={`/`} className="flex items-center gap-3 group">
                     {/* Logo Image */}
                     <div
                         className={cn(
@@ -99,8 +90,18 @@ export function StickyHeader({ brand, isLoggedIn = false }: { brand: string, isL
                         </span>
                     </div>
                 </Link>
+
+                {/* Navigation Section - Right Aligned (including Mobile Menu) */}
+                <div className="flex items-center">
+                    <MainNav
+                        brand={brand}
+                        isScrolled={true} // Always white background style
+                        isLoggedIn={isLoggedIn}
+                    />
+                </div>
             </div>
         </header>
 
     )
 }
+
