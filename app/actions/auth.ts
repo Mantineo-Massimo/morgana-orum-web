@@ -3,6 +3,8 @@
 import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { sendEmail } from "@/lib/mail"
+import { getWelcomeEmailTemplate } from "@/lib/email-templates"
 
 
 export async function loginAction(email: string) {
@@ -71,6 +73,15 @@ export async function registerUser(formData: FormData) {
             maxAge: 60 * 60 * 24 * 7, // 1 week
             path: "/",
         })
+
+        // Send Welcome Email (Non-blocking)
+        const brand = (association?.toLowerCase() === "orum" || association?.toLowerCase() === "o.r.u.m.") ? "orum" : "morgana"
+        sendEmail({
+            to: email,
+            subject: `Benvenuto in ${brand === "orum" ? "O.R.U.M." : "Morgana"}!`,
+            html: getWelcomeEmailTemplate(name, brand as "morgana" | "orum"),
+            brand: brand as "morgana" | "orum"
+        }).catch(err => console.error("Async welcome email error:", err))
 
         return { success: true, user }
     } catch (error) {

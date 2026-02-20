@@ -2,6 +2,8 @@
 
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
+import { sendEmail } from "@/lib/mail"
+import { getEventBookingTemplate } from "@/lib/email-templates"
 
 // --- READ ---
 
@@ -112,6 +114,24 @@ export async function registerForEvent(userEmail: string, eventId: number) {
                 status: "REGISTERED"
             }
         })
+
+        // Send Confirmation Email (Non-blocking)
+        // Detect brand from associations logic or use a default/context
+        // For simplicity, we use the user's association or the context of the event
+        const brand = (user.association?.toLowerCase() === "orum" || user.association?.toLowerCase() === "o.r.u.m.") ? "orum" : "morgana"
+
+        sendEmail({
+            to: userEmail,
+            subject: `Conferma Prenotazione: ${event.title}`,
+            html: getEventBookingTemplate(
+                user.name,
+                event.title,
+                event.date.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                event.location,
+                brand as "morgana" | "orum"
+            ),
+            brand: brand as "morgana" | "orum"
+        }).catch(err => console.error("Async booking email error:", err))
 
         revalidatePath("/[brand]/dashboard")
         return { success: true, message: "Registrazione effettuata con successo!" }

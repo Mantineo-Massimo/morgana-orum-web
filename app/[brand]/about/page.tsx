@@ -184,8 +184,8 @@ function Counters() {
     return (
         <section className="py-20 bg-zinc-900 text-white">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-                <CounterItem number="50+" label="Rappresentanti Eletti" icon={Users} delay={0} />
-                <CounterItem number="10.000+" label="Studenti Supportati" icon={HeartHandshake} delay={0.2} />
+                <CounterItem number="110+" label="Rappresentanti Eletti" icon={Users} delay={0} />
+                <CounterItem number="12.000+" label="Studenti Supportati" icon={HeartHandshake} delay={0.2} />
                 <CounterItem number="100+" label="Eventi ogni anno" icon={Calendar} delay={0.4} />
             </div>
         </section>
