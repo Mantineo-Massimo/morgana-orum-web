@@ -159,14 +159,14 @@ export default function DashboardPage({ params }: { params: { brand: string } })
                                 </p>
                             </div>
 
-                            <button className={cn(
+                            <Link href={`/${brand}/dashboard/offers`} className={cn(
                                 "w-full py-3.5 rounded-xl text-sm font-bold transition-all border-2 flex items-center justify-center gap-2 group",
                                 isMorgana
                                     ? "border-orange-100 text-orange-600 hover:bg-orange-50 hover:border-orange-200"
                                     : "border-blue-100 text-blue-900 hover:bg-blue-50 hover:border-blue-200"
                             )}>
                                 Scopri Tutte le Offerte 🚀
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
