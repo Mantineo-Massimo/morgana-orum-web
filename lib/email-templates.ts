@@ -88,3 +88,37 @@ export function getEventBookingTemplate(userName: string, eventTitle: string, ev
     </div>
     `
 }
+
+export function getPasswordResetTemplate(userName: string, resetLink: string, brand: string = "morgana") {
+    const config = BRANDS[brand] || BRANDS.morgana
+
+    return `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+        <div style="background-color: ${config.color}; padding: 30px; text-align: center;">
+            <img src="${config.logo}" alt="${config.name}" style="height: 60px; width: auto;" />
+            <h1 style="color: white; margin-top: 20px;">Recupero Password</h1>
+        </div>
+        <div style="padding: 30px; line-height: 1.6; color: #333;">
+            <p>Ciao <strong>${userName}</strong>,</p>
+            <p>Abbiamo ricevuto una richiesta di ripristino della password per il tuo account.</p>
+            <p>Puoi procedere al reset cliccando sul pulsante qui sotto:</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="${resetLink}" 
+                   style="background-color: #18182b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+                   Ripristina Password
+                </a>
+            </div>
+
+            <p style="font-size: 13px; color: #666;">Questo link scadrà tra 1 ora per motivi di sicurezza.</p>
+            <p style="font-size: 13px; color: #666;">Se non hai richiesto tu il ripristino, puoi ignorare questa email in tutta sicurezza.</p>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
+            <p style="font-size: 12px; color: #888; text-align: center;">
+                Associazione Morgana & O.R.U.M.<br />
+                © ${new Date().getFullYear()} ${config.name}
+            </p>
+        </div>
+    </div>
+    `
+}

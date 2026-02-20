@@ -4,7 +4,8 @@ import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { sendEmail } from "@/lib/mail"
-import { getWelcomeEmailTemplate } from "@/lib/email-templates"
+import { getWelcomeEmailTemplate, getPasswordResetTemplate } from "@/lib/email-templates"
+import { randomUUID } from "crypto"
 
 
 export async function loginAction(email: string) {
@@ -87,5 +88,68 @@ export async function registerUser(formData: FormData) {
     } catch (error) {
         console.error("Registration error:", error)
         return { success: false, error: "Errore durante la registrazione. Matricola o Email già in uso?" }
+    }
+}
+
+export async function requestPasswordReset(email: string, brand: "morgana" | "orum") {
+    try {
+        const user = await prisma.user.findUnique({ where: { email } })
+        if (!user) {
+            // Per sicurezza, non dire che l'utente non esiste
+            return { success: true, message: "Se l'email è registrata, riceverai un link a breve." }
+        }
+
+        const token = randomUUID()
+        const expiry = new Date(Date.now() + 3600000) // 1 hour from now
+
+        await prisma.user.update({
+            where: { email },
+            data: {
+                resetToken: token,
+                resetTokenExpiry: expiry
+            }
+        })
+
+        // In production, should use the real domain
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+        const resetLink = `${baseUrl}/${brand}/reset-password?token=${token}`
+
+        await sendEmail({
+            to: email,
+            subject: "Recupero Password",
+            html: getPasswordResetTemplate(user.name, resetLink, brand),
+            brand: brand
+        })
+
+        return { success: true, message: "Email inviata con successo!" }
+    } catch (error) {
+        console.error("Request reset error:", error)
+        return { success: false, error: "Errore durante la richiesta di recupero." }
+    }
+}
+
+export async function resetPassword(token: string, newPassword: string) {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { resetToken: token }
+        })
+
+        if (!user || !user.resetTokenExpiry || user.resetTokenExpiry < new Date()) {
+            return { success: false, error: "Token non valido o scaduto." }
+        }
+
+        await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                password: newPassword, // In real app: HASH THIS!
+                resetToken: null,
+                resetTokenExpiry: null
+            }
+        })
+
+        return { success: true, message: "Password aggiornata con successo!" }
+    } catch (error) {
+        console.error("Reset password error:", error)
+        return { success: false, error: "Errore durante il reset della password." }
     }
 }

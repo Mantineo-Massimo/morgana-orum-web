@@ -61,6 +61,14 @@ export default function LoginPage({ params }: { params: { brand: string } }) {
                             placeholder="••••••••"
                             className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-900"
                         />
+                        <div className="flex justify-end mt-1">
+                            <Link
+                                href={`/${brand}/forgot-password`}
+                                className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider hover:text-zinc-900 transition-colors"
+                            >
+                                Password dimenticata?
+                            </Link>
+                        </div>
                     </div>
 
                     {error && <p className="text-sm text-red-500 font-bold text-center">{error}</p>}
@@ -85,7 +93,7 @@ export default function LoginPage({ params }: { params: { brand: string } }) {
                         Registrati
                     </Link>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
