@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Merriweather } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const merriweather = Merriweather({
@@ -26,7 +27,10 @@ export default function RootLayout({
         "min-h-screen bg-background font-sans antialiased overflow-x-hidden",
         inter.variable,
         merriweather.variable
-      )}>{children}</body>
+      )}>
+        {children}
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
