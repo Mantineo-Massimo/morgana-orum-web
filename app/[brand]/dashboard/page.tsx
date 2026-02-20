@@ -105,77 +105,69 @@ export default function DashboardPage({ params }: { params: { brand: string } })
 
             <div className="grid lg:grid-cols-2 gap-8 items-start">
 
-                {/* DIGITAL CARD SECTION */}
-                {/* LEFT COLUMN: Card + Offers */}
+                {/* LEFT COLUMN: UNIFIED MEMBER PASS & OFFERS */}
                 <div className="space-y-6">
-                    {/* DIGITAL CARD SECTION */}
-                    <div className="relative w-full aspect-[1.58/1] rounded-2xl shadow-2xl overflow-hidden transition-transform hover:scale-[1.01] duration-500 group">
-                        {/* CSS Gradient Background */}
+                    <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden flex flex-col h-full min-h-[400px]">
+                        {/* Member Header (Card-like but integrated) */}
                         <div className={cn(
-                            "absolute inset-0 z-0",
+                            "p-8 text-white relative overflow-hidden",
                             isMorgana
-                                ? "bg-gradient-to-br from-[#8a1c22] via-[#c12830] to-[#e04f56]"
-                                : "bg-gradient-to-br from-[#0f0f1d] via-[#18182e] to-[#2a2a4a]"
+                                ? "bg-gradient-to-br from-[#8a1c22] to-[#c12830]"
+                                : "bg-gradient-to-br from-[#0f0f1d] to-[#18182e]"
                         )}>
-                            {/* Abstract Patterns Overlay */}
-                            <div className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] opacity-20 bg-[radial-gradient(circle,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:20px_20px] rotate-12 pointer-events-none"></div>
-                            <div className="absolute bottom-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-                            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/40 to-transparent opacity-60"></div>
-                        </div>
+                            {/* Decorative Pattern */}
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-10 -mt-10 blur-2xl"></div>
 
-                        {/* Card Content */}
-                        <div className="relative z-10 h-full p-6 md:p-8 flex flex-col justify-between text-white">
-                            {/* Top Section: Logos */}
-                            <div className="flex justify-between items-start">
-                                <div className="bg-white/90 p-2 rounded-xl shadow-lg backdrop-blur-sm flex items-center gap-3">
-                                    <div className="relative size-8 md:size-10">
-                                        <Image src={isMorgana ? "/assets/morgana.png" : "/assets/orum.png"} alt={brand} fill className="object-contain" sizes="40px" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Center Section: Membership Label */}
-                            <div className="flex-1 flex items-center justify-center">
-                                <div className="text-center py-4 px-6 border border-white/20 rounded-2xl bg-white/5 backdrop-blur-sm">
-                                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/60 mb-1">Status Socio</p>
-                                    <p className="text-lg font-bold text-white tracking-tight">Membro dal {userData.memberSince}</p>
-                                </div>
-                            </div>
-
-                            {/* Bottom Section: User Info & Status */}
-                            <div className="mt-auto">
-                                <div className="flex items-end justify-between">
-                                    <div>
-                                        <h3 className="text-2xl font-bold tracking-tight shadow-black/10 drop-shadow-lg">{userData.name} {userData.surname}</h3>
-                                        <p className="text-sm opacity-90 font-mono mt-1 tracking-wider">#{userData.matricola}</p>
+                            <div className="relative z-10">
+                                <div className="flex justify-between items-start mb-12">
+                                    <div className="bg-white/90 p-2 rounded-xl shadow-lg flex items-center gap-3">
+                                        <div className="relative size-8 md:size-10">
+                                            <Image src={isMorgana ? "/assets/morgana.png" : "/assets/orum.png"} alt={brand} fill className="object-contain" sizes="40px" />
+                                        </div>
                                     </div>
                                     <div className="text-right">
-                                        <div className="flex items-center gap-2 justify-end mb-1">
+                                        <p className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1">Status Socio</p>
+                                        <div className="flex items-center gap-2 justify-end">
                                             <span className="relative flex h-2 w-2">
                                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                                             </span>
-                                            <span className="font-medium text-xs uppercase tracking-wider">Membro dal {userData.memberSince}</span>
+                                            <span className="font-bold text-xs uppercase tracking-tighter">Attivo</span>
                                         </div>
-                                        <p className="font-serif italic text-[10px] opacity-80">&quot;Sempre dalla parte dello studente&quot;</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-2xl font-bold tracking-tight mb-1">{userData.name} {userData.surname}</h3>
+                                    <div className="flex items-center gap-4 text-white/70 text-sm font-mono tracking-widest">
+                                        <span>#{userData.matricola}</span>
+                                        <span className="text-white/30">•</span>
+                                        <span className="font-sans text-xs uppercase font-bold tracking-normal italic">Membro dal {userData.memberSince}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Discover Offers Button */}
-                    <div className="bg-white rounded-xl p-6 border border-zinc-100 shadow-sm text-center">
-                        <h3 className="font-bold text-zinc-900 mb-2">Vantaggi Esclusivi</h3>
-                        <p className="text-xs text-zinc-500 mb-4">Scopri le convenzioni riservate ai soci.</p>
-                        <button className={cn(
-                            "w-full py-3 rounded-xl text-sm font-bold transition-all border-2 flex items-center justify-center gap-2 group",
-                            isMorgana
-                                ? "border-orange-100 text-orange-600 hover:bg-orange-50"
-                                : "border-blue-100 text-blue-900 hover:bg-blue-50"
-                        )}>
-                            <span className="group-hover:scale-110 transition-transform">🎁</span> Scopri le Offerte
-                        </button>
+                        {/* Advantages Section (Integrated) */}
+                        <div className="p-8 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 className="text-lg font-bold text-zinc-900 mb-2 flex items-center gap-2">
+                                    <span className="text-xl">🎁</span> Vantaggi Esclusivi
+                                </h3>
+                                <p className="text-sm text-zinc-500 leading-relaxed mb-6">
+                                    In quanto membro dell&apos;associazione {isMorgana ? "Morgana" : "O.R.U.M."}, hai accesso a convenzioni speciali con attività locali, librerie e servizi universitari.
+                                </p>
+                            </div>
+
+                            <button className={cn(
+                                "w-full py-3.5 rounded-xl text-sm font-bold transition-all border-2 flex items-center justify-center gap-2 group",
+                                isMorgana
+                                    ? "border-orange-100 text-orange-600 hover:bg-orange-50 hover:border-orange-200"
+                                    : "border-blue-100 text-blue-900 hover:bg-blue-50 hover:border-blue-200"
+                            )}>
+                                Scopri Tutte le Offerte 🚀
+                            </button>
+                        </div>
                     </div>
                 </div>
 
