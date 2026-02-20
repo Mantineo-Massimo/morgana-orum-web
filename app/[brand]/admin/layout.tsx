@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { getUserDashboardData } from "@/app/actions/users"
-import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar } from "lucide-react"
+import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar, Tag } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
 
@@ -43,6 +43,12 @@ export default async function AdminLayout({
             label: "Eventi",
             href: `/${brand}/admin/events`,
             icon: Calendar,
+            exact: false
+        },
+        {
+            label: "Convenzioni",
+            href: `/${brand}/admin/conventions`,
+            icon: Tag,
             exact: false
         },
         // {
