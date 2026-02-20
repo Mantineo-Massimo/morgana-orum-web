@@ -3,9 +3,9 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-
+import { useState, useEffect } from "react"
 import { logoutAction } from "@/app/actions/auth"
-import { LogOut, User } from "lucide-react"
+import { LogOut, User, Menu, X } from "lucide-react"
 
 export function MainNav({
     className,
@@ -15,6 +15,17 @@ export function MainNav({
     ...props
 }: React.HTMLAttributes<HTMLElement> & { brand: string, isScrolled?: boolean, isLoggedIn?: boolean }) {
     const pathname = usePathname()
+    const [isOpen, setIsOpen] = useState(false)
+
+    // Prevent body scroll when menu is open
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = 'unset'
+        }
+        return () => { document.body.style.overflow = 'unset' }
+    }, [isOpen])
 
     const routes = [
         {
@@ -47,62 +58,141 @@ export function MainNav({
     const textColor = isScrolled ? "text-muted-foreground hover:text-primary" : "text-white/80 hover:text-white"
     const activeColor = isScrolled ? "text-primary after:bg-primary" : "text-white after:bg-white"
     const hoverLineColor = isScrolled ? "after:bg-primary" : "after:bg-white"
+    const brandColor = brand === 'morgana' ? "bg-[#c12830]" : "bg-[#18182e]"
 
     return (
-        <nav
-            className={cn("flex items-center space-x-8 lg:space-x-10", className)}
-            {...props}
-        >
-            {routes.map((route) => (
-                <Link
-                    key={route.href}
-                    href={route.href}
-                    className={cn(
-                        "text-sm font-bold uppercase tracking-widest transition-colors relative",
-                        route.active
-                            ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
-                            : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
-                    )}
-                >
-                    {route.label}
-                </Link>
-            ))}
-
-            {isLoggedIn ? (
-                <div className="flex items-center gap-3 ml-4">
+        <>
+            {/* Desktop Navigation */}
+            <nav
+                className={cn("hidden lg:flex items-center space-x-8 lg:space-x-10", className)}
+                {...props}
+            >
+                {routes.map((route) => (
                     <Link
-                        href={`/${brand}/dashboard`}
+                        key={route.href}
+                        href={route.href}
                         className={cn(
-                            "flex items-center gap-2 px-4 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
-                            brand === 'morgana'
-                                ? "bg-[#c12830]"
-                                : "bg-[#18182e]"
+                            "text-sm font-bold uppercase tracking-widest transition-colors relative",
+                            route.active
+                                ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
+                                : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
                         )}
                     >
-                        <User className="size-4" /> Area Personale
+                        {route.label}
                     </Link>
+                ))}
 
-                    <button
-                        onClick={() => logoutAction(brand)}
-                        className="p-2 rounded-full text-zinc-500 hover:text-red-600 hover:bg-red-50 transition-colors"
-                        title="Logout"
+                {isLoggedIn ? (
+                    <div className="flex items-center gap-3 ml-4">
+                        <Link
+                            href={`/${brand}/dashboard`}
+                            className={cn(
+                                "flex items-center gap-2 px-4 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
+                                brandColor
+                            )}
+                        >
+                            <User className="size-4" /> Area Personale
+                        </Link>
+
+                        <button
+                            onClick={() => logoutAction(brand)}
+                            className="p-2 rounded-full text-zinc-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+                            title="Logout"
+                        >
+                            <LogOut className="size-5" />
+                        </button>
+                    </div>
+                ) : (
+                    <Link
+                        href={`/${brand}/login`}
+                        className={cn(
+                            "ml-4 px-6 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
+                            brandColor
+                        )}
                     >
-                        <LogOut className="size-5" />
-                    </button>
+                        Accedi
+                    </Link>
+                )}
+            </nav>
+
+            {/* Mobile Toggle Button */}
+            <button
+                className="lg:hidden p-2 text-zinc-900 relative z-50"
+                onClick={() => setIsOpen(true)}
+                aria-label="Open Menu"
+            >
+                <Menu className="size-8" />
+            </button>
+
+            {/* Mobile Fullscreen Overlay */}
+            {isOpen && (
+                <div className="fixed inset-0 z-[100] bg-white flex flex-col lg:hidden animate-in fade-in zoom-in-95 duration-200">
+                    <div className="flex items-center justify-end p-6 h-20 md:h-24">
+                        <button
+                            className="p-2 text-zinc-900 rounded-full hover:bg-zinc-100 transition-colors"
+                            onClick={() => setIsOpen(false)}
+                            aria-label="Close Menu"
+                        >
+                            <X className="size-8" />
+                        </button>
+                    </div>
+
+                    <div className="flex-1 flex flex-col justify-center px-8 pb-12">
+                        <nav className="flex flex-col space-y-8 text-center">
+                            {routes.map((route) => (
+                                <Link
+                                    key={route.href}
+                                    href={route.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className={cn(
+                                        "text-3xl font-black uppercase tracking-widest transition-colors",
+                                        route.active ? (brand === 'morgana' ? "text-[#c12830]" : "text-[#18182e]") : "text-zinc-600 hover:text-zinc-900"
+                                    )}
+                                >
+                                    {route.label}
+                                </Link>
+                            ))}
+                        </nav>
+
+                        <div className="mt-12 flex flex-col gap-4">
+                            {isLoggedIn ? (
+                                <>
+                                    <Link
+                                        href={`/${brand}/dashboard`}
+                                        onClick={() => setIsOpen(false)}
+                                        className={cn(
+                                            "flex items-center justify-center gap-2 w-full py-4 rounded-2xl text-white font-bold uppercase tracking-widest text-sm shadow-xl",
+                                            brandColor
+                                        )}
+                                    >
+                                        <User className="size-5" /> Area Personale
+                                    </Link>
+                                    <button
+                                        onClick={() => {
+                                            setIsOpen(false);
+                                            logoutAction(brand);
+                                        }}
+                                        className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-zinc-100 text-zinc-600 hover:text-red-600 font-bold uppercase tracking-widest text-sm transition-colors"
+                                    >
+                                        <LogOut className="size-5" /> Esci
+                                    </button>
+                                </>
+                            ) : (
+                                <Link
+                                    href={`/${brand}/login`}
+                                    onClick={() => setIsOpen(false)}
+                                    className={cn(
+                                        "w-full py-4 rounded-2xl text-center text-white font-bold uppercase tracking-widest text-sm shadow-xl",
+                                        brandColor
+                                    )}
+                                >
+                                    Accedi
+                                </Link>
+                            )}
+                        </div>
+                    </div>
                 </div>
-            ) : (
-                <Link
-                    href={`/${brand}/login`}
-                    className={cn(
-                        "ml-4 px-6 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
-                        brand === 'morgana'
-                            ? (isScrolled ? "bg-[#c12830] hover:shadow-[#c12830]/40" : "bg-white text-[#c12830] hover:bg-white/90")
-                            : (isScrolled ? "bg-[#18182e] hover:shadow-[#18182e]/40" : "bg-white text-[#18182e] hover:bg-white/90")
-                    )}
-                >
-                    Accedi
-                </Link>
             )}
-        </nav>
+        </>
     )
 }
