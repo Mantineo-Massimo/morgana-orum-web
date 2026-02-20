@@ -40,10 +40,18 @@ export function Footer({ brand }: { brand: string }) {
                             Impegno, passione e competenza al servizio della comunità accademica.
                         </p>
                         <div className="flex items-center gap-4 mt-2">
-                            <Link href="#" className="hover:opacity-80 transition-opacity"><Facebook className="size-5" /></Link>
-                            <Link href="#" className="hover:opacity-80 transition-opacity"><Instagram className="size-5" /></Link>
-                            <Link href="#" className="hover:opacity-80 transition-opacity"><Twitter className="size-5" /></Link>
-                            <Link href="#" className="hover:opacity-80 transition-opacity"><Youtube className="size-5" /></Link>
+                            {isMorgana ? (
+                                <>
+                                    <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity"><Facebook className="size-5" /></a>
+                                    <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity"><Instagram className="size-5" /></a>
+                                    <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity"><Youtube className="size-5" /></a>
+                                </>
+                            ) : (
+                                <>
+                                    <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity"><Facebook className="size-5" /></a>
+                                    <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity"><Instagram className="size-5" /></a>
+                                </>
+                            )}
                         </div>
                     </div>
 

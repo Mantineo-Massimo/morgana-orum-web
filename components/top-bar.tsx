@@ -24,10 +24,18 @@ export function TopBar({ brand }: { brand: string }) {
                 {/* Right Side: Socials */}
                 <div className="flex items-center gap-4 md:gap-6 ml-auto">
                     <div className="flex items-center gap-3">
-                        <Link href="#" className="hover:text-white/80 transition-colors"><Facebook className="size-4" /></Link>
-                        <Link href="#" className="hover:text-white/80 transition-colors"><Twitter className="size-4" /></Link>
-                        <Link href="#" className="hover:text-white/80 transition-colors"><Instagram className="size-4" /></Link>
-                        <Link href="#" className="hover:text-white/80 transition-colors"><Youtube className="size-4" /></Link>
+                        {isMorgana ? (
+                            <>
+                                <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="hover:text-white/80 transition-colors"><Facebook className="size-4" /></a>
+                                <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="hover:text-white/80 transition-colors"><Instagram className="size-4" /></a>
+                                <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="hover:text-white/80 transition-colors"><Youtube className="size-4" /></a>
+                            </>
+                        ) : (
+                            <>
+                                <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="hover:text-white/80 transition-colors"><Facebook className="size-4" /></a>
+                                <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="hover:text-white/80 transition-colors"><Instagram className="size-4" /></a>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
