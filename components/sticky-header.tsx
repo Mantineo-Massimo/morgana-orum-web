@@ -9,8 +9,10 @@ import { cn } from "@/lib/utils"
 export function StickyHeader({ brand, isLoggedIn = false }: { brand: string, isLoggedIn?: boolean }) {
     const isMorgana = brand === "morgana"
     const [isScrolled, setIsScrolled] = useState(false)
+    const [hasMounted, setHasMounted] = useState(false)
 
     useEffect(() => {
+        setHasMounted(true)
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50)
         }
@@ -20,6 +22,8 @@ export function StickyHeader({ brand, isLoggedIn = false }: { brand: string, isL
 
     // Brand Colors
     const brandColorClass = isMorgana ? "bg-[#c12830]" : "bg-[#18182e]"
+
+    if (!hasMounted) return null
 
     return (
         <header

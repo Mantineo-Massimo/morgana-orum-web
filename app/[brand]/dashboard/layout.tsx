@@ -21,8 +21,10 @@ export default function DashboardLayout({
 
     const [userData, setUserData] = useState<any>(null)
     const [loading, setLoading] = useState(true)
+    const [hasMounted, setHasMounted] = useState(false)
 
     useEffect(() => {
+        setHasMounted(true)
         async function loadUser() {
             setLoading(true)
             const data = await getUserDashboardData()
@@ -67,7 +69,7 @@ export default function DashboardLayout({
         }
     ]
 
-    if (loading) {
+    if (!hasMounted || loading) {
         return <div className="min-h-screen bg-zinc-50 flex items-center justify-center"><Loader2 className="size-8 animate-spin text-zinc-300" /></div>
     }
 

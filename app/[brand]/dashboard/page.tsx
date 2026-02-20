@@ -18,8 +18,10 @@ export default function DashboardPage({ params }: { params: { brand: string } })
 
     const [loading, setLoading] = useState(true)
     const [userData, setUserData] = useState<any>(null)
+    const [hasMounted, setHasMounted] = useState(false)
 
     useEffect(() => {
+        setHasMounted(true)
         async function loadData() {
             setLoading(true)
             const data = await getUserDashboardData()
@@ -50,7 +52,7 @@ export default function DashboardPage({ params }: { params: { brand: string } })
         loadData()
     }, [])
 
-    if (loading) return null // Layout handles loading
+    if (!hasMounted || loading) return null
 
     if (!userData) return null
 
