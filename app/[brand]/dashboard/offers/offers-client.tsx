@@ -88,11 +88,11 @@ export default function OffersClient({ initialData, brand }: { initialData: Conv
                         >
                             <div className="p-6 flex-1">
                                 <div className="flex items-start justify-between mb-4">
-                                    <div className="relative size-16 rounded-2xl border border-zinc-100 overflow-hidden bg-zinc-50 flex items-center justify-center p-2 shadow-inner">
+                                    <div className="relative size-24 rounded-full border-2 border-zinc-100 overflow-hidden bg-white flex items-center justify-center p-3 shadow-sm shrink-0 mx-auto md:mx-0">
                                         {item.logo ? (
                                             <Image src={item.logo} alt={item.name} fill className="object-contain p-2" />
                                         ) : (
-                                            <Globe className="size-8 text-zinc-200" />
+                                            <Globe className="size-10 text-zinc-200" />
                                         )}
                                     </div>
                                     <div className="flex flex-col items-end gap-1.5">

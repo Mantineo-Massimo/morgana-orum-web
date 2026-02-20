@@ -76,7 +76,7 @@ export default function ConventionsListClient({ initialData, brand }: { initialD
                                     <tr key={c.id} className="hover:bg-zinc-50/50 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="flex items-center gap-3">
-                                                <div className="relative size-10 rounded-lg overflow-hidden bg-zinc-100 border border-zinc-200 shrink-0 flex items-center justify-center p-1">
+                                                <div className="relative size-10 rounded-full overflow-hidden bg-zinc-100 border border-zinc-200 shrink-0 flex items-center justify-center p-1">
                                                     {c.logo ? (
                                                         <Image src={c.logo} alt={c.name} fill className="object-contain p-1" />
                                                     ) : (
