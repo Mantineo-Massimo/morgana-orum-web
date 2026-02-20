@@ -142,9 +142,9 @@ export default function ConventionForm({ brand, initialData }: ConventionFormPro
                     <label className={labelClass}>Logo Attività</label>
                     <div className="flex items-start gap-4">
                         {logoPreview && (
-                            <div className="relative size-24 rounded-full overflow-hidden bg-zinc-50 shrink-0 border border-zinc-200 flex items-center justify-center p-2 shadow-sm">
+                            <div className="relative size-24 rounded-full overflow-hidden bg-white shrink-0 border-2 border-zinc-100 flex items-center justify-center p-4 shadow-sm">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={logoPreview} alt="Logo Preview" className="max-w-full max-h-full object-contain" />
+                                <img src={logoPreview} alt="Logo Preview" className="max-w-[80%] max-h-[80%] object-contain" />
                                 <button
                                     type="button"
                                     onClick={() => { setLogoPreview(null); setLogoFile(null) }}
